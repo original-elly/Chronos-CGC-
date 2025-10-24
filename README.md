@@ -2,9 +2,9 @@
 
 
 
-\## Chronos Guidance Computer
+Chronos Guidance Computer
 
-
+======================================================================================
 
 Chronos is an assembly interpreter project.
 
