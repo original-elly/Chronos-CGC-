@@ -18,148 +18,82 @@ Chronos v.2 will be made after this one and will be an actual Assembly interpret
 The name CGC is a reference to the AGC (Apollo Guidance Computer).
 
 
-
 Instructions and registers
 ===========================================================================
+Registers:
+A - Accumulator
+Q - Adress
+R - Return line
+C - Program-counter
 
-\- A:
-         Permanent register
-         Mathematical operations are done on this register
-   
-         Ex.:
-             LOAD 5 (A <= 5)
-             # A = 5
-             ADD 5 (A <= A + 5)
-             # A = 10
-             SUB 10 (A <= A - 10)
-             # A = 0
-         
-\- Q:
-         Temporary register
-         Used for all MEM instructions
-         Will be reset the line after it is called
+Basic
+- LOAD
+- READ
+- STORE
 
-         Ex.:
-             READ 1 (Q <= 1)
-             # Q = 1
-             LOAD MEM (A <= Q, Q <= 0)
-             # A = 1, Q = 0
-             LOAD MEM (A <= Q, Q <= 0)
-             # A = 0, Q = 0
+Arithmetic
+- ADD
+- SUB
 
-\- C:
+Jumps
+- JUMP
+- JZERO
+- JNEG
+- OVCHK
+- SWTO
+- RETURN
 
-Incremental register
-Used to follow the lines of the code
-JUMP, OVCHK, and XINPUT can affect this register
- 
-Ex.:
-# C = 0
-0    NOOP
-# C = 1
-1    NOOP
-# C = 2
-2    NOOP
-# C = 3
-3    NOOP
-# C = 4
-4    JUMP 3
-# C = 3 (loop)
+i/o
+- XINPUT
+- DRAW
 
 
-
-\- LOAD X / LOAD MEM:
+# LOAD X/ MEM
 Puts argument in A
-A <= X
-or
-A <= RAM\[Q] (MEM)
+A <= X/ RAM[Q]
 
-\- READ X / LOAD MEM:
-Puts argument in Q
-Q <= X
-or
-q <= RAM\[Q] (MEM)
+# READ X/ MEM
+Pus argument in Q
+Q <= X/ RAM[Q]
 
-\- STORE X / STORE MEM:
-Puts element in A in RAM according to argument
-RAM\[X] <= A
-or
-RAM\[Q] <= A (MEM)
+# STORE X/ MEM
+Puts value in A into argument of RAM
+RAM[X/ RAM[Q]] <= A
 
-\- ADD X / ADD MEM:
-&nbsp;   Adds argument to element in A
-&nbsp;   A <= A + X
-&nbsp;   or
-&nbsp;   A <= A + RAM\[Q] (MEM)
+# ADD X/ MEM
+Basic addition of argument on A
+A <= A + X/ RAM[Q]
 
-\- SUB X / SUB MEM:
-&nbsp;   Substracts argument to element in A
-&nbsp;   A <= A - X
-&nbsp;   or
-&nbsp;   A <= A - RAM\[Q] (MEM)
+# SUB X/ MEM
+Basic subtraction of argument on A
+A <= A - X/ RAM[Q]
 
-\- JUMP X / JUMP MEM:
-&nbsp;   Jumps to the line in argument; Puts the argument in C
-&nbsp;   C <= X
-&nbsp;   or
-&nbsp;   C <= RAM\[Q] (MEM)
+# JUMP X/ MEM
+Jump to line in argument, put in C
+C <= X/ RAM[Q]
 
-\- JZERO X / JZERO MEM:
-&nbsp;   Jumps to the line in argument if A is equal to 0
-&nbsp;   if A == 0:
-&nbsp;       C <= X
-&nbsp;       or
-&nbsp;       C <= RAM\[Q] (MEM)
-&nbsp;   else:
-&nbsp;       C <= C + 1
+# JZERO X/ MEM
+Jumps to line in argument if A==0, put in C, continues otherwise
+C <= X/ RAM[Q] if A==0 else C+1
 
-\- JNEG X / JNEG MEM:
-&nbsp;   Jumps to the line in argument if A lesser than 0
-&nbsp;   if A < 0:
-&nbsp;       C <= X
-&nbsp;       or
-&nbsp;       C <= RAM\[Q] (MEM)
-&nbsp;   else:
-&nbsp;       C <= C + 1
+# JNEG X/ MEM
+Jumps to line in argument if A<0, put in C, continues otherwise
+C <= X/ RAM[Q] if A<0 else C+1
 
-\- OVCHK:
-&nbsp;   If previous operation caused an overflow in A, skips a line
-&nbsp;   When an overflow occurs, OVCHK is True for one operation
-&nbsp;   Doesn't take arguments
-&nbsp;  
-&nbsp;   if OVCHK:
-&nbsp;       C <= C + 2
-&nbsp;   
-&nbsp;   if not OVCHK:
-&nbsp;       C <= C + 1
+# OVCHK
+Skips one line if previous operation on A caused an overflow, continues otherwise
+C <= C+2 if OVCHK else C+1
 
-\- DRAW X / DRAW MEM:
-&nbsp;   
-&nbsp;   \[ON HOLD]
+# SWTO X
+Switches to another Assembly file, must be a name in argument, only one switch can be done at a time
+R <= C
+C <= 0
+file = X
 
-\- XINPUT X / XINPUT MEM:
-&nbsp;   Jumps a line if the input in argument is equal to 1, 3bits for 8 inputs
-&nbsp;   
-&nbsp;   if XINPUT 0:
-&nbsp;       C <= C + 2
-&nbsp;   else:
-&nbsp;       C <= C + 1
-&nbsp;       
-&nbsp;   or 
-&nbsp;   
-&nbsp;   if XINPUT RAM\[Q]: (MEM)
-&nbsp;       C <= C + 1
-&nbsp;   else:
-&nbsp;       C <= C + 1
+# RETURN
+Once the switch file has been completed, go back to main file at line in R
+file = main
+C <= R
 
-
-
-\- NOOP:
-&nbsp;   Does nothing for one line
-&nbsp;   Doesn't take arguments
-&nbsp;   C <= C + 1
-
-
-Other information will follow
-===========================================================================
-
+# XINPUT X/ MEM
+Check if input in argument is pressed, if True: skip one line, else continue, argument is [0,8]
