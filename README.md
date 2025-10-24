@@ -49,42 +49,42 @@ Instructions and registers
 
 \- C:
 
-&nbsp;   Incremental register
-&nbsp;   Used to follow the lines of the code
-&nbsp;   JUMP, OVCHK, and XINPUT can affect this register
-&nbsp;   
-&nbsp;   Ex.:
-&nbsp;            # C = 0
-&nbsp;       0    NOOP
-&nbsp;            # C = 1
-&nbsp;       1    NOOP
-&nbsp;            # C = 2
-&nbsp;       2    NOOP
-&nbsp;            # C = 3
-&nbsp;       3    NOOP
-&nbsp;            # C = 4
-&nbsp;       4    JUMP 3
-&nbsp;            # C = 3 (loop)
-&nbsp;   
+Incremental register
+Used to follow the lines of the code
+JUMP, OVCHK, and XINPUT can affect this register
+ 
+Ex.:
+# C = 0
+0    NOOP
+# C = 1
+1    NOOP
+# C = 2
+2    NOOP
+# C = 3
+3    NOOP
+# C = 4
+4    JUMP 3
+# C = 3 (loop)
+
 
 
 \- LOAD X / LOAD MEM:
-&nbsp;   Puts argument in A
-&nbsp;   A <= X
-&nbsp;   or
-&nbsp;   A <= RAM\[Q] (MEM)
+Puts argument in A
+A <= X
+or
+A <= RAM\[Q] (MEM)
 
 \- READ X / LOAD MEM:
-&nbsp;   Puts argument in Q
-&nbsp;   Q <= X
-&nbsp;   or
-&nbsp;   q <= RAM\[Q] (MEM)
+Puts argument in Q
+Q <= X
+or
+q <= RAM\[Q] (MEM)
 
 \- STORE X / STORE MEM:
-&nbsp;   Puts element in A in RAM according to argument
-&nbsp;   RAM\[X] <= A
-&nbsp;   or
-&nbsp;   RAM\[Q] <= A (MEM)
+Puts element in A in RAM according to argument
+RAM\[X] <= A
+or
+RAM\[Q] <= A (MEM)
 
 \- ADD X / ADD MEM:
 &nbsp;   Adds argument to element in A
