@@ -33,20 +33,19 @@ Instructions and registers
              # A = 10
              SUB 10 (A <= A - 10)
              # A = 0
-
+         
 \- Q:
+         Temporary register
+         Used for all MEM instructions
+         Will be reset the line after it is called
 
-&nbsp;   Temporary register
-&nbsp;   Used for all MEM instructions
-&nbsp;   Will be reset the line after it is called
-&nbsp;   
-&nbsp;   Ex.:
-&nbsp;       READ 1 (Q <= 1)
-&nbsp;       # Q = 1
-&nbsp;       LOAD MEM (A <= Q, Q <= 0)
-&nbsp;       # A = 1, Q = 0
-&nbsp;       LOAD MEM (A <= Q, Q <= 0)
-&nbsp;       # A = 0, Q = 0
+         Ex.:
+             READ 1 (Q <= 1)
+             # Q = 1
+             LOAD MEM (A <= Q, Q <= 0)
+             # A = 1, Q = 0
+             LOAD MEM (A <= Q, Q <= 0)
+             # A = 0, Q = 0
 
 \- C:
 
