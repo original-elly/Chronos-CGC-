@@ -23,16 +23,16 @@ Instructions and registers
 ===========================================================================
 
 \- A:
-&nbsp;   Permanent register
-&nbsp;   Mathematical operations are done on this register
-&nbsp;   
-&nbsp;   Ex.:
-&nbsp;       LOAD 5 (A <= 5)
-&nbsp;       # A = 5
-&nbsp;       ADD 5 (A <= A + 5)
-&nbsp;       # A = 10
-&nbsp;       SUB 10 (A <= A - 10)
-&nbsp;       # A = 0
+         Permanent register
+         Mathematical operations are done on this register
+   
+         Ex.:
+             LOAD 5 (A <= 5)
+             # A = 5
+             ADD 5 (A <= A + 5)
+             # A = 10
+             SUB 10 (A <= A - 10)
+             # A = 0
 
 \- Q:
 
